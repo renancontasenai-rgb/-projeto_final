@@ -27,7 +27,7 @@ class UsuarioController extends Controller
             $usuario->email = $request->email;
             $usuario->senha = Hash::make($request->senha);
             $usuario->cpf = $request->cpf;
-            $usuario->data_nascimento = $request->data_nascimento;
+            $usuario->data_nacimento = $request->data_nacimento;
 
             $usuario->save();
 
@@ -69,7 +69,7 @@ class UsuarioController extends Controller
         'email' => 'required|string|email|max:255|',
         'senha' => 'required|string|',
         'cpf' => 'required|string|max:11|',
-        'data_nascimento' => 'nullable|date',
+        'data_nacimento' => 'nullable|date',
     ]);
 
         try {
@@ -86,7 +86,7 @@ class UsuarioController extends Controller
             $usuario->email = $request->email;
             $usuario->senha = Hash::make($request->senha);
             $usuario->cpf = $request->cpf;
-            $usuario->data_nascimento = $request->data_nascimento;
+            $usuario->data_nacimento = $request->data_nacimento;
 
             $usuario->save();
 

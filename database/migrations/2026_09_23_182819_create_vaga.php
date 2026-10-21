@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
 {
     Schema::create('vaga', function (Blueprint $table) {
-        $table->id('id_vaga');
+        $table->id();
         $table->string('numero', 10)->unique();
         $table->string('setor', 30);
-        $table->enum('tipo_vaga', ['COMUM', 'PCD', 'IDOSO', 'MOTO']);
-        $table->enum('status', ['LIVRE', 'OCUPADA'])->default('LIVRE');
+        $table->string('tipo_vaga', 20);
+        $table->string('status', 20);
     });
 }
 

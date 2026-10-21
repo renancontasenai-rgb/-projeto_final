@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('funcionario', function (Blueprint $table) {
             $table->id();
+            $table->string('nome');
+            $table->string('email');
             $table->string('cargo');
             $table->string('departamento');
             $table->date('data_admissao')->nullable();
-            $table->unsignedBigInteger('usuarios_id');
-            $table->foreign('usuarios_id')->references('id')->on('usuarios')->onDelete('cascade');
             $table->timestamps();
-            
+
         });
     }
 
@@ -29,10 +29,7 @@ return new class extends Migration
     public function down(): void
     {
     Schema::table('funcionario', function (Blueprint $table) {
-            $table->dropForeign(['usuario_id']);
-            $table->dropColumn('usuario_id');
         });
 
-        Schema::dropIfExists('funcionario');
     }
 };

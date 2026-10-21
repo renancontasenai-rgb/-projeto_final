@@ -15,11 +15,10 @@ return new class extends Migration
         $table->string('placa', 8)->primary();
         $table->string('modelo', 50);
         $table->string('cor', 30)->nullable();
-        $table->enum('tipo', ['CARRO', 'MOTO', 'VAN']);
-        $table->foreignId('id_pessoa')
-              ->constrained('pessoa', 'id_pessoa')
-              ->restrictOnDelete()
-              ->cascadeOnUpdate();
+        $table->string('tipo', 50);
+        $table->unsignedBigInteger('id_pessoa');
+        $table->foreign('id_pessoa')->references('id')->on('pessoas')->onDelete('cascade');
+
     });
     }
     /**

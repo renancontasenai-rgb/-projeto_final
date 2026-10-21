@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UsuarioController extends Controller
 {
-    public function CadastroController(Request $request){
+    public function usuariocontroller(Request $request){
         return view('usuarios_cadastro');
     }
 

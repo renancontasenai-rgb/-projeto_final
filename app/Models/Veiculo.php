@@ -12,6 +12,7 @@ class Veiculo extends Model
         'placa',
         'modelo',
         'cor',
+        'tipo',
         'pessoas_id',
     ];
 }

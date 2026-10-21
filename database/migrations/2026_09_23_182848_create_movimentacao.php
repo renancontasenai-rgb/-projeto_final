@@ -14,12 +14,12 @@ return new class extends Migration
     Schema::create('movimentacao', function (Blueprint $table) {
         $table->id('id_mov');
         $table->string('placa', 8);
-        $table->foreignId('id_vaga')->constrained('vaga', 'id_vaga');
+        $table->unsignedBigInteger('vaga_id');
+        $table->foreign('vaga_id')->references('id')->on('vaga')->onDelete('cascade');
         $table->dateTime('data_entrada');
         $table->dateTime('data_saida')->nullable();
         $table->string('porteiro', 100)->nullable();
 
-        $table->foreign('placa')->references('placa')->on('veiculo');
     });
 }
 
@@ -29,5 +29,10 @@ return new class extends Migration
     public function down(): void
 {
     Schema::dropIfExists('movimentacao');
+
+    Schema::table('movimentacao', function (Blueprint $table) {
+        $table->dropForeign(['vaga_id']);
+        $table->dropColumn('vaga_id');
+    });
 }
 };

@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pessoa extends Model
 {
-    protected $table = 'pessoa';
+    protected $table = 'pessoas';
+    
     public $timestamps = false;
     protected $fillable = [
         'nome',
+        'tipo',
         'cpf',
         'telefone',
-        'email',
-        'usuarios_id',
     ];
 }

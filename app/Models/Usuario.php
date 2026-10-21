@@ -13,6 +13,6 @@ class Usuario extends Model
         'email',
         'senha',
         'cpf',
-        'data_nascimento'
+        'data_nacimento'
     ];
 }
