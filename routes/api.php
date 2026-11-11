@@ -29,3 +29,8 @@ Route::delete('/deletar_pessoa', [PessoaController::class, 'deletar_pessoa']);
 Route::get('/ver_pessoa', [PessoaController::class, 'ver_pessoa']);
 Route::get('/listar_pessoas', [PessoaController::class, 'listar_pessoas']);
 Route::get('/listar_pessoas_simples', [PessoaController::class, 'listar_pessoas_simples']);
+
+Route::post('/login', [UsuarioController::class, 'login']);
+
+Route::post('/login',[UsuarioController::class,'login']);
+Route::post('/logout',[UsuarioController::class,'logout']);

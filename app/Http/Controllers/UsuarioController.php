@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Usuario;
 use Illuminate\Support\Facades\Hash;
+use App\Models\usuariotoken;
 
 class UsuarioController extends Controller
 {
@@ -98,18 +99,47 @@ class UsuarioController extends Controller
 
     }
 
-    public function deletar_usuario(Request $request){
-        $request->validate([
-            'id' => 'required|integer|exists:usuarios,id',
-        ]);
+    public function login(Request $request){
+            $request->validate([
+                'email' => 'required|',
+                'senha' => 'required|',
+            ]);
 
-        try {
-            $usuario = Usuario::find($request->id);
-            $usuario->delete();
-            return response()->json(['message' => 'Usuário deletado com sucesso!', 'erro' => 'n'], 200);
-        } catch (\Throwable $th) {
-            return response()->json(['message' => 'Erro ao deletar usuário!', 'erro' => 's', 'msg_erro' => $th->getMessage()], 200);
+
+            $usuario = Usuario::where('email','=', $request->email)->first();
+            if($usuario){
+                if(Hash::check($request->senha, $usuario->senha)){
+                    $user_token = new usuariotoken();
+                    $user_token->usuario_id = $usuario->id;
+                    $user_token->token = Hash::make($usuario->id . $usuario->email . now());
+                    $user_token->valido_ate = now()->addDays(7);
+                    $user_token->save();
+                    return response()->json(['message' => 'Login realizado com sucesso' , 'erro' => 'n', 'token' => $user_token->token],200 );
+
+                }else{
+                return response()->json(['message' => 'Usuario ou senha não encontrado', 'erro' => 's'],200);
+            }
+
+            }else{
+                return response()->json(['message' => 'Email não encontrado', 'erro' => 's'],200);
+            }
         }
-    }
+
+         public function logout(Request $request){
+            $request->validate([
+                'usuario_id' => 'required|integer|exists:usuarios,id',
+                'token' => 'required|string',
+            ]);
+    $token = usuariotoken::where('usuario_id', $request->usuario_id)
+        ->where('token', $request->token)
+        ->first();
+
+    if ($token) {$token->delete();
+
+        return response()->json(['message' => 'Logout realizado com sucesso','erro' => 'n'], 200);
+
+    }return response()->json(['message' => 'Token não encontrado','erro' => 's'], 200);
+}
+
 
 }
